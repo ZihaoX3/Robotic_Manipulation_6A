@@ -1,4 +1,4 @@
-function (theta1,theta2,theta3,theta4) = IK(x,y,z,gripper_orientation)
+function [theta1,theta2,theta3,theta4] = InverseKinematics(x,y,z,gripper_orientation)
 
     % link lengths
     l1 = 0.077;
@@ -7,11 +7,11 @@ function (theta1,theta2,theta3,theta4) = IK(x,y,z,gripper_orientation)
     l4 = 0.126;
     
     % goal coords
-    x = -0.2114;
-    y = -0.0;
-    z = 0.34;
+%     x = -0.2114;
+%     y = -0.0;
+%     z = 0.34;
     
-    gripper_orientation = deg2rad(90);% orientation of gripper with respect to world frame
+%     gripper_orientation = deg2rad(90);% orientation of gripper with respect to world frame
     
     r3 = sqrt(x^2+y^2);% distance of end effector from origin in x-y plane
     z3 = z - 0.077;% height of end effector
