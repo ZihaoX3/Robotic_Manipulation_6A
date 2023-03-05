@@ -2,12 +2,18 @@ clc
 %clear all
 close all
 
-constant = - atan2(0.024,0.128) + pi/2;% offset angle between link 2 and 3
+gamma = atan2(0.024,0.128);% offset angle between link 2 and 3
 
-theta1 = deg2rad(0);
-theta2 = constant + deg2rad(0);
-theta3 = - constant + deg2rad(0);
-theta4 = deg2rad(0);
+
+
+
+
+
+% theta1 = deg2rad(0);
+% theta2 = constant + deg2rad(0);
+% theta3 = - constant + deg2rad(0);
+% theta4 = deg2rad(0);
+constant = 0;
 
 alpha1 = pi/2;
 alpha2 = 0;
@@ -39,15 +45,23 @@ zlim([0 0.4])
 
 
 %IK
-[theta1, theta2, theta3, theta4] = InverseKinematics(0.1, 0.1, 0.1, deg2rad(0));
+[theta1, theta2, theta3, theta4] = InverseKinematics(0.2740,0.0000,0.2048, deg2rad(0));
+rad2deg(theta1)
+rad2deg(theta2)
+rad2deg(theta3)
+rad2deg(theta4)
 
-theta2 = constant + theta2;
-theta3 = - constant + theta3;
+
+dh_theta2 = theta2 - gamma + pi/2;
+dh_theta3 = theta3 + gamma - pi/2;
+% theta2 = constant + theta2;
+% theta3 = - constant + theta3;
+
 
 %fk for links
 T0_1 = Transform(alpha1, a1, d1, theta1);
-T1_2 = Transform(alpha2, a2, d2, theta2);
-T2_3 = Transform(alpha3, a3, d3, theta3);
+T1_2 = Transform(alpha2, a2, d2, dh_theta2);
+T2_3 = Transform(alpha3, a3, d3, dh_theta3);
 T3_4 = Transform(alpha4, a4, d4, theta4);
 
 T0_4 = T0_1 * T1_2 * T2_3 * T3_4;
