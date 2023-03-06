@@ -64,7 +64,7 @@ while (b <= 5)
     end_effector_orientation = T0_4(1:3,1:3);
     
 
-     %remove robot and frames from previous iteration
+     %remove robot and coord frames from previous iteration
         if b ~=1
             delete(link1)
             delete(link2)
@@ -96,19 +96,16 @@ while (b <= 5)
     %view ([0 -90 0]); %X Z Plane
     %view ([0 0 -90 ]); 
     
-
+    %increment angles
     theta1 = theta1 + pi/10;
     theta2 = theta2 + pi/8;
     theta3 = theta3 + pi/16;
-    theta4 = theta4 + pi/16;
+    theta4 = theta4 + pi/16;    
     
-    
-    
+    %%plot end effector position
     scatter3(end_effector_pos(1), end_effector_pos(2), end_effector_pos(3), 'MarkerEdgeColor', [0 .75 .75], 'MarkerFaceColor',[0 .75 .75], 'Marker', 'o');
-
-
     b = b+1;
-    pause(0.4)   
+    pause(0.5)   
 end
 
 
@@ -121,7 +118,6 @@ T = [cos(theta) -sin(theta)*cos(alpha) sin(theta)*sin(alpha) a*cos(theta);
     0 sin(alpha) cos(alpha) d;
     0 0 0 1];
 end
-
 
 function frame = plotCoordFrame(transform)
 

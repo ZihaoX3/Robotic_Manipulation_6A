@@ -41,19 +41,19 @@ zlim([0 0.4])
 
 divisions = 20;
 %10cm square in x-y plane
-% x = [linspace(0.0, 0.1, divisions), zeros(1,divisions)+0.1, linspace(0.1-0.1/divisions, 0.0, divisions), zeros(1,divisions)];
-% y = [zeros(1,divisions)+0.1 , linspace(0.1+0.1/divisions, 0.2, divisions), zeros(1,divisions)+0.2, linspace(0.2-0.1/divisions, 0.1, divisions)];
-% z = zeros(1,divisions*4)+0.1;
+x = [linspace(0.0, 0.1, divisions), zeros(1,divisions)+0.1, linspace(0.1-0.1/divisions, 0.0, divisions), zeros(1,divisions)];
+y = [zeros(1,divisions)+0.1 , linspace(0.1+0.1/divisions, 0.2, divisions), zeros(1,divisions)+0.2, linspace(0.2-0.1/divisions, 0.1, divisions)];
+z = zeros(1,divisions*4)+0.2;
 
 % %10cm square in z-x plane
 % x = [linspace(0.0, 0.1, divisions), zeros(1,divisions)+0.1, linspace(0.1-0.1/divisions, 0.0, divisions), zeros(1,divisions)];
 % z = [zeros(1,divisions)+0.1 , linspace(0.1+0.1/divisions, 0.2, divisions), zeros(1,divisions)+0.2, linspace(0.2-0.1/divisions, 0.1, divisions)];
 % y = zeros(1,divisions*4)+0.2;
 
-% %10cm square in z-y plane
-y = [linspace(0.0, 0.1, divisions), zeros(1,divisions)+0.1, linspace(0.1-0.1/divisions, 0.0, divisions), zeros(1,divisions)];
-z = [zeros(1,divisions)+0.1 , linspace(0.1+0.1/divisions, 0.2, divisions), zeros(1,divisions)+0.2, linspace(0.2-0.1/divisions, 0.1, divisions)];
-x = zeros(1,divisions*4)+0.2;
+% % %10cm square in z-y plane
+% y = [linspace(0.0, 0.1, divisions), zeros(1,divisions)+0.1, linspace(0.1-0.1/divisions, 0.0, divisions), zeros(1,divisions)];
+% z = [zeros(1,divisions)+0.1 , linspace(0.1+0.1/divisions, 0.2, divisions), zeros(1,divisions)+0.2, linspace(0.2-0.1/divisions, 0.1, divisions)];
+% x = zeros(1,divisions*4)+0.2;
 
 b=1;
 while (b <= divisions*4)
@@ -106,7 +106,7 @@ while (b <= divisions*4)
     frame2 = plotCoordFrame(T0_2);
     frame3 = plotCoordFrame(T0_3);
     frame4 = plotCoordFrame(T0_4);
-    
+
     %draw square
 %     if b == 1
 %         drawLink([x(1),y(1),z(1)], [x(b),y(b),z(b)],2,'magenta');
@@ -121,10 +121,6 @@ while (b <= divisions*4)
     b = b + 1;
     pause(0.1)   
 end
-
-
-
-
 
 function T = Transform(alpha, a, d, theta)
     

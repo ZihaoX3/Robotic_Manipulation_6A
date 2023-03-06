@@ -45,7 +45,7 @@ zlim([0 0.4])
 
 
 %IK
-[theta1, theta2, theta3, theta4] = InverseKinematics(0.2740,0.0000,0.2048, deg2rad(0));
+[theta1, theta2, theta3, theta4] = InverseKinematics(0.1,0.0000,0.1, deg2rad(-90));
 rad2deg(theta1)
 rad2deg(theta2)
 rad2deg(theta3)

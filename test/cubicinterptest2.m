@@ -37,26 +37,44 @@ ylim([-0.3 0.3])
 zlim([0 0.4])
 view(3);
 
-%generate points
-point1 = [0.1,0.1,0.1];
-point2 = [-0.1,-0.1,0.1];
-[theta1,theta2,theta3,theta4] = InverseKinematics(point1(1),point1(2),point1(3),0);
-[theta1f,theta2f,theta3f,theta4f] = InverseKinematics(point2(1),point2(2),point2(3),0);
+% %generate points
+% %(75,-200,40,0,deg2rad(212))
+start_x = 0.075;
+start_y = -0.2;
+start_z = 0.04;
+
+holder_offset = 0.020; % How much to raise cube above placeholder
+
+points = [];
+
+%Go to start 
+points = [points; [start_x,start_y,start_z]];
+
+%Grab cube position
+points = [points; [start_x,start_y,start_z]];
+
+%Move straight up from start z above cube holder
+points = [points;  [start_x,start_y,start_z + holder_offset]];
+
+% Move x' closer (halfway towards itself)
+points = [points; [start_x/1.2,start_y/1.2,start_z + holder_offset]];
 
 
-m = 50;
+% point1 = [0.1,0.1,0.1];
+% point2 = [-0.1,-0.1,0.1];
+% point3 = [0.1, 0.1, 0.1];
+% 
+% points = vertcat( point1 , point2, point3);
 
-[q1, qd1, qdd1] = cubicTrajectoryPlanning(m, theta1, theta1f, 0, 0);
-[q2, qd2, qdd2] = cubicTrajectoryPlanning(m, theta2, theta2f, 0, 0);
-[q3, qd3, qdd3] = cubicTrajectoryPlanning(m, theta3, theta3f, 0, 0);
-[q4, qd4, qdd4] = cubicTrajectoryPlanning(m, theta4, theta4f, 0, 0);
 
-for i=1:length(q1)
+[pos_points1, pos_points2, pos_points3, pos_points4] = cubicInterp(points);
 
-    theta1 = q1(i);
-    theta2 = q2(i);
-    theta3 = q3(i);
-    theta4 = q4(i);
+for i=1:size(pos_points1,2) 
+    
+    theta1 = pos_points1(i);
+    theta2 = pos_points2(i);
+    theta3 = pos_points3(i);
+    theta4 = pos_points4(i);
 
     dh_theta2 = theta2 - gamma + pi/2;
     dh_theta3 = theta3 + gamma - pi/2;
@@ -93,7 +111,7 @@ for i=1:length(q1)
 
     scatter3(end_effector_pos(1), end_effector_pos(2), end_effector_pos(3), 'MarkerEdgeColor', 'blue', 'MarkerFaceColor',[0 .75 .75], 'Marker', 'o');
    
-    pause(0.02)   
+    pause(0.01)   
 end
 
 function T = Transform(alpha, a, d, theta)
