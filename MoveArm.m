@@ -228,7 +228,7 @@ i = 0;
 %         pause(0.02)
 %     end
     
-        %% INTERPOLATION 2 %%
+    %% INTERPOLATION 2 %%
     point1 = [0.1,0.1,0.1];
     point2 = [0.2,0,0.2];
 
