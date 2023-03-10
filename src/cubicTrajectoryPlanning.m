@@ -21,6 +21,7 @@ timestep = linspace(0, tf, n);
 q = zeros(1,n);
 qd = zeros(1,n);
 qdd = zeros(1,n);
+% gripper_list = [];
 
 for i = 1:length(timestep)
     t = timestep(i);
@@ -30,5 +31,6 @@ for i = 1:length(timestep)
     q(i) = a0 + a1*t + a2*t2 + a3*t3;
     qd(i) = a1 +2*a2*t + 3*a3*t2;
     qdd(i) = 2*a2 + 6*a3*t;
+%     gripper_list = [gripper_list, gripper_angle];
 
 end

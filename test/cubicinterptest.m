@@ -38,11 +38,24 @@ zlim([0 0.4])
 view(3);
 
 %generate points
-point1 = [0.1,0.1,0.1];
-point2 = [-0.1,-0.1,0.1];
-[theta1,theta2,theta3,theta4] = InverseKinematics(point1(1),point1(2),point1(3),0);
-[theta1f,theta2f,theta3f,theta4f] = InverseKinematics(point2(1),point2(2),point2(3),0);
+point1 = [0.075, -0.200,0.070];%[0.1,0.1,0.1];
+point2 = [0.075, -0.200,0.070];
 
+thetaG_horizontal = deg2rad(0);
+thetaG_down = deg2rad(-89.6);
+
+[theta] = InverseKinematics2(point1(1),point1(2),point1(3),thetaG_down);
+[thetaf] = InverseKinematics2(point2(1),point2(2),point2(3),thetaG_horizontal);
+
+theta1 = theta(1);
+theta2 = theta(2);
+theta3 = theta(3);
+theta4 = theta(4);
+
+theta1f = thetaf(1);
+theta2f = thetaf(2);
+theta3f = thetaf(3);
+theta4f = thetaf(4);
 
 m = 50;
 

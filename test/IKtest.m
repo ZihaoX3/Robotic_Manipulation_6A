@@ -40,8 +40,16 @@ ylim([-0.2 0.2])
 zlim([0 0.4])
 
 
-%IK
-[theta1, theta2, theta3, theta4] = InverseKinematics( 0.2250  ,       0 ,   0.0700   , deg2rad(-89));
+
+%IK    end_list(2,1), end_list(2,2), current_place_down_height + 0.4, thetaG_down
+%           0.225, 0  , 0.035+ 0.04, deg2rad(-89.6);
+[theta1, theta2, theta3, theta4] = InverseKinematics(  0, 0.274  ,0.2048, deg2rad(0));
+
+% [theta] = InverseKinematics2(  0.2250    ,     0   , 0.0350 , deg2rad(0));
+% theta(1) = theta1;
+% theta(2) = theta2;
+% theta(3) = theta3;
+% theta(4) = theta4;
 rad2deg(theta1)
 rad2deg(theta2)
 rad2deg(theta3)
@@ -69,6 +77,10 @@ link2end = T0_2(1:3,4);
 link3end = T0_3(1:3,4);
 end_effector_pos = T0_4(1:3,4);
 end_effector_orientation = T0_4(1:3,1:3);
+
+ if end_effector_pos(3) <= 0
+        disp("end effector hit floor")
+ end
 
 
 %plot robot links

@@ -44,7 +44,7 @@ DXL_ID3_ELBOW                    = 13;            % Dynamixel ID: 3
 DXL_ID4_WRIST                    = 14;            % Dynamixel ID: 4
 DXL_ID5_GRIPPER                  = 15;            % Dynamixel ID: 5
 BAUDRATE                    = 115200;
-DEVICENAME                  = 'COM7';       % Check which port is being used on your controller
+DEVICENAME                  = 'COM5';       % Check which port is being used on your controller
                                             % ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque
@@ -113,7 +113,7 @@ end
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_OPERATING_MODE, 3);
 
 % Enable Dynamixel Torque
-write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
+write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2_SHOULDER, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3_ELBOW, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
 write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4_WRIST, ADDR_PRO_TORQUE_ENABLE, TORQUE_ENABLE);
@@ -136,25 +136,25 @@ end
 i = 0;
 
 
-    j = 0;
-    while (j<200)
-        j = j+1;
-        
-        % Read present position
-        dxl_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_PRESENT_POSITION);
-        dx2_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2_SHOULDER, ADDR_PRO_PRESENT_POSITION);
-        dx3_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3_ELBOW, ADDR_PRO_PRESENT_POSITION);
-        dx4_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4_WRIST, ADDR_PRO_PRESENT_POSITION);
-        dx5_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5_GRIPPER, ADDR_PRO_PRESENT_POSITION);
-        
-        dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
-        dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
-        
-        if dxl_comm_result ~= COMM_SUCCESS
-            fprintf('%s\n', getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
-        elseif dxl_error ~= 0
-            fprintf('%s\n', getRxPacketError(PROTOCOL_VERSION, dxl_error));
-        end
+%     j = 0;
+%     while (j<200)
+%         j = j+1;
+%         
+%         % Read present position
+%         dxl_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_PRESENT_POSITION);
+%         dx2_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2_SHOULDER, ADDR_PRO_PRESENT_POSITION);
+%         dx3_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3_ELBOW, ADDR_PRO_PRESENT_POSITION);
+%         dx4_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4_WRIST, ADDR_PRO_PRESENT_POSITION);
+%         dx5_present_position = read4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5_GRIPPER, ADDR_PRO_PRESENT_POSITION);
+%         
+%         dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
+%         dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
+%         
+%         if dxl_comm_result ~= COMM_SUCCESS
+%             fprintf('%s\n', getTxRxResult(PROTOCOL_VERSION, dxl_comm_result));
+%         elseif dxl_error ~= 0
+%             fprintf('%s\n', getRxPacketError(PROTOCOL_VERSION, dxl_error));
+%         end
 
 %         fprintf('[ID:%03d] Base Angle: %03d\n', DXL_ID1_BASE, typecast(uint32(encoder_position_to_radians(dxl_present_position)), 'int32'));
 %         fprintf('[ID:%03d] Shoulder Angle: %03d\n', DXL_ID2_SHOULDER, typecast(uint32(encoder_position_to_radians(dx2_present_position)), 'int32'));
@@ -162,9 +162,9 @@ i = 0;
 %         fprintf('[ID:%03d] Wrist Angle: %03d\n', DXL_ID4_WRIST, typecast(uint32(encoder_position_to_radians(dx4_present_position)), 'int32'));
 %         fprintf('[ID:%03d] Gripper Angle: %03d\n', DXL_ID5_GRIPPER, typecast(uint32(encoder_position_to_radians(dx5_present_position)), 'int32'));
 
-        if ~(abs(dxl_goal_position(index) - typecast(uint32(dxl_present_position), 'int32')) > DXL_MOVING_STATUS_THRESHOLD)
-            break
-        end
+%         if ~(abs(dxl_goal_position(index) - typecast(uint32(dxl_present_position), 'int32')) > DXL_MOVING_STATUS_THRESHOLD)
+%             break
+%         end
    
 
 
@@ -245,27 +245,32 @@ i = 0;
 
 
 %% TASK2a Test %%
- [theta1_list, theta2_list, theta3_list, theta4_list] = task2a_robot();
+ [theta1_list, theta2_list, theta3_list, theta4_list, gripperList] = task2b_robot();
 
-    for i=1:size(pos_points1,2) 
+    for i=1:size(theta1_list,2) 
     
         theta1 = theta1_list(i);
         theta2 = theta2_list(i);
         theta3 = theta3_list(i);
         theta4 = theta4_list(i);
+        gripper_angle = gripperList(i);
     
-        theta1_arm = radians_to_encoder_position(-theta1);
-%         theta1 = theta1_convert(theta1);
+        theta1_arm = radians_to_encoder_position(theta1);%accidently wrote all the coords the wrong way round so correct here
+        %theta1_arm = theta1_convert(theta1);
         theta2_arm = radians_to_encoder_position(-theta2);
         theta3_arm = radians_to_encoder_position(-theta3);
         theta4_arm = radians_to_encoder_position(-theta4);
-
+        
+        
+        write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5_GRIPPER, ADDR_PRO_GOAL_POSITION, gripper_angle);
+        write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4_WRIST, ADDR_PRO_GOAL_POSITION, theta4_arm);
         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_GOAL_POSITION, theta1_arm);
         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2_SHOULDER, ADDR_PRO_GOAL_POSITION, theta2_arm);
         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3_ELBOW, ADDR_PRO_GOAL_POSITION, theta3_arm);
-        write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4_WRIST, ADDR_PRO_GOAL_POSITION, theta4_arm);
+        
+        
     
-        pause(0.02)
+        pause(0.007)
     end      
 
 
@@ -289,7 +294,7 @@ i = 0;
 % %     write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5_GRIPPER, ADDR_PRO_GOAL_POSITION, theta5);
 %         pause(50) 
 
-    end
+%     end
 
 
 % Disable Dynamixel Torque

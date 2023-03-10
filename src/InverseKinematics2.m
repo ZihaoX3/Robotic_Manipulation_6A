@@ -25,10 +25,11 @@ function [theta] = InverseKinematics2(x,y,z,gripper_orientation)
     
     theta(3) = -acos(arg); % -ve is elbow up i think??
     
-    %change to elbow down if violates joint limits
-    if ((rad2deg(theta(3)) > 90) || (rad2deg(theta(3)) < -125))
-        theta(3) = acos(arg);
-    end
+    %change to elbow down if violates joint limits (doesnt work.... why lol)
+%     if ((rad2deg(theta(3)) > 90) || (rad2deg(theta(3)) < -125))
+%         theta(3) = acos(arg);
+%         disp("changing to elbow down")
+%     end
         
 %     s3 = sqrt(1 - arg^2); %+ve sol
 %     theta(3) = -atan2(s3, cos(arg)); something is wrong with this and idk what
