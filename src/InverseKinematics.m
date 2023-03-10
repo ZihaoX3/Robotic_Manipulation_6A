@@ -43,6 +43,7 @@ function [theta1,theta2,theta3,theta4] = InverseKinematics(x,y,z,gripper_orienta
     theta2 =  - (theta2 -gamma);
     theta3 = theta3 + deg2rad(90) - gamma;
 
+
     
     % disp("theta1 "+ rad2deg(theta1))
     % disp("theta2 "+ rad2deg(theta2))

@@ -229,30 +229,33 @@ i = 0;
 %     end
     
     %% INTERPOLATION 2 %%
-    point1 = [0.1,0.1,0.1];
-    point2 = [0.2,0,0.2];
-
-    points = [point1, point2];
-
-    [pos_points1,pos_points2,pos_points3,pos_points4] = cubicInterp(points);
-    
-    
+%     point1 = [0.1,0.1,0.1];
+%     point2 = [0.2,0,0.2];
+% 
+%     points = [point1, point2];
+% 
+%     [pos_points1,pos_points2,pos_points3,pos_points4] = cubicInterp(points);
 %     m = 50;
 %     
 %     [q1, qd1, qdd1] = cubicTrajectoryPlanning(m, theta1, theta1f, 0, 0);
 %     [q2, qd2, qdd2] = cubicTrajectoryPlanning(m, theta2, theta2f, 0, 0);
 %     [q3, qd3, qdd3] = cubicTrajectoryPlanning(m, theta3, theta3f, 0, 0);
 %     [q4, qd4, qdd4] = cubicTrajectoryPlanning(m, theta4, theta4f, 0, 0);
+
+
+
+%% TASK2a Test %%
+ [theta1_list, theta2_list, theta3_list, theta4_list] = task2a_robot();
+
+    for i=1:size(pos_points1,2) 
     
-    for i=1:length(pos_points1)
+        theta1 = theta1_list(i);
+        theta2 = theta2_list(i);
+        theta3 = theta3_list(i);
+        theta4 = theta4_list(i);
     
-        theta1 = pos_points1(i);
-        theta2 = pos_points2(i);
-        theta3 = pos_points3(i);
-        theta4 = pos_points4(i);
-    
-%         theta1_arm = radians_to_encoder_position(-theta1);
-        theta1 = theta1_convert(theta1_rad);
+        theta1_arm = radians_to_encoder_position(-theta1);
+%         theta1 = theta1_convert(theta1);
         theta2_arm = radians_to_encoder_position(-theta2);
         theta3_arm = radians_to_encoder_position(-theta3);
         theta4_arm = radians_to_encoder_position(-theta4);
@@ -267,9 +270,7 @@ i = 0;
 
 
 
-
-
-% %% Set one position %%
+%% Set one position %%
 % %       %Default Pose 0.2740,0.0000,0.2048 225,0,40,0,deg2rad(212)
 %         [theta1_rad, theta2_rad, theta3_rad, theta4_rad] = InverseKinematics(0.274,0,0.2048, deg2rad(0));
 %         

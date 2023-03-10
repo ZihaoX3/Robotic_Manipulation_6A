@@ -28,7 +28,7 @@ xlabel('X')
 ylabel('Y')
 zlabel('Z')
 
-title("Task 1a Simulation")
+title("Task 2a Simulation")
 
 grid on
 hold on
@@ -58,7 +58,6 @@ default_pos = [0.2740,0.0000,0.2048];
 %cube1 to 4, cube2 to 5, cube3 to 6
 cube1 = [0.075, -0.200];%cube holder 1 x and y
 cube4 = [0.125, -0.125];%cube holder 4 x and y
-
 cube2 = [0.225, 0];
 cube5 = [0.100, 0];
 cube6 = [0, 0.100];
@@ -71,16 +70,13 @@ safe_dist = 0.070; % safe distance above cube holder
 
 pointsList = [];
 
-% start_pos = cube1;
-% end_pos = cube4;
-
 start_list = [cube1; cube2; cube3];
 end_list = [cube4; cube5; cube6];
 
 % % Go to default position, |▔ pose
 %     pointsList = [pointsList; [default_pos(1), default_pos(2), default_pos(3),thetaG_horizontal, open_value]];
 i=1;
-while i <= 1%length(start_list)
+while i <= length(start_list)
 %     start_position = start_list(i)
 %     end_position = end_list(i)
     
@@ -101,6 +97,7 @@ while i <= 1%length(start_list)
 end
 
 % TODO: actually use open/close_value
+        % if joint limits exceeded switch gripper orientation
 number_of_intermediate_points = 40;
 [pos_points1, pos_points2, pos_points3, pos_points4] = cubicInterp(pointsList, number_of_intermediate_points);
 

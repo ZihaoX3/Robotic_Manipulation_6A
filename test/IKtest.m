@@ -5,10 +5,6 @@ close all
 gamma = atan2(0.024,0.128);% offset angle between link 2 and 3
 
 
-
-
-
-
 % theta1 = deg2rad(0);
 % theta2 = constant + deg2rad(0);
 % theta3 = - constant + deg2rad(0);
@@ -45,7 +41,7 @@ zlim([0 0.4])
 
 
 %IK
-[theta1, theta2, theta3, theta4] = InverseKinematics(0.1,0.0000,0.1, deg2rad(-90));
+[theta1, theta2, theta3, theta4] = InverseKinematics( 0.2250  ,       0 ,   0.0700   , deg2rad(-89));
 rad2deg(theta1)
 rad2deg(theta2)
 rad2deg(theta3)
