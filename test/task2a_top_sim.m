@@ -28,7 +28,7 @@ xlabel('X')
 ylabel('Y')
 zlabel('Z')
 
-title("Task 2a Simulation")
+title("Task 1a Simulation")
 
 grid on
 hold on
@@ -39,18 +39,18 @@ view(3);
 
 
 % Cube Holder Coords
-% 1. (0.075, -0.200, 0.040)
-% 2. (0.225, 0, 0.040)
-% 3. (0.150, 0.150, 0.040)
-% 4. (0.125, -0.125, 0.050)
-% 5. (0.100, 0, 0.050)
-% 6. (0, 0.100, 0.050)
+% 1. (0.075, -0.200)
+% 2. (0.225, 0)
+% 3. (0.150, 0.150)
+% 4. (0.125, -0.125)
+% 5. (0.100, 0)
+% 6. (0, 0.100)
 
 open_value = deg2rad(90);
 close_value = deg2rad(215);
 
 thetaG_horizontal = deg2rad(0);
-thetaG_down = deg2rad(-90);
+thetaG_down = deg2rad(-89.7); %yeah doesn't work at 90 i dunno why
 
 %Default Pose 0.2740,0.0000,0.2048
 default_pos = [0.2740,0.0000,0.2048];
@@ -70,103 +70,37 @@ safe_dist = 0.070; % safe distance above cube holder
 
 pointsList = [];
 
+% start_pos = cube1;
+% end_pos = cube4;
+
 start_list = [cube1; cube2; cube3];
 end_list = [cube4; cube5; cube6];
 
-thetaG = thetaG_down;
-try_side = false;
-    
+% % Go to default position, |▔ pose
+%     pointsList = [pointsList; [default_pos(1), default_pos(2), default_pos(3),thetaG_horizontal, open_value]];
 i=1;
-while i <= size(start_list,1)
-      
-      new_pointsList = task2acoordlist(start_list(i, :), end_list(i, :), safe_dist, thetaG_down, cube_grab_top_z, open_value, close_value);
+while i <= length(start_list)
+%     start_position = start_list(i)
+%     end_position = end_list(i)
     
-        
-%       for j=1:size(new_pointsList,1)
-%           jointLimitsOk = withinJointLimits(new_pointsList(j,:));
-%           invalidIK = isIKInvalid(new_pointsList(j,:));
-% 
-%           if ~jointLimitsOk || invalidIK
-%               try_side = true;
-%           end
-%       end
-
-%       if try_side
-%         new_pointsList = task2acoordlist(start_list(i, 1:2), end_list(i, 1:2), safe_dist, thetaG_horizontal, cube_grab_side_z, open_value, close_value, cur_pointsList);
-%       end
-
-      pointsList = [pointsList; new_pointsList];
-    
-%     % Go to safe distance above cube 
-%     point = [start_list(i,1), start_list(i,2), safe_dist, thetaG, open_value];
-% 
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%     end
-%     
-%     pointsList = [pointsList; point];
-% 
-%     % Grab cube
-%     point = [start_list(i,1), start_list(i,2), cube_grab_top_z, thetaG, close_value];
-% 
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%         point(3) = cube_grab_side_z;
-%     end
-%     pointsList = [pointsList; point];
-% 
-%     %pick cube up
-%     point = [start_list(i,1), start_list(i,2), safe_dist, thetaG, close_value];
-% 
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%     end
-%     pointsList = [pointsList; point];
-% 
-%     
-%     %move to end point
-%     point = [end_list(i,1), end_list(i,2), safe_dist, thetaG, close_value];
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%     end
-%     pointsList = [pointsList; point];
-% 
-% 
-%     %put cube down
-%     point = [end_list(i,1), end_list(i,2), cube_grab_top_z, thetaG, open_value];
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%         point(3) = cube_grab_side_z;
-%     end
-%     pointsList = [pointsList; point];
-% 
-%     %move back to safe distance
-%     point = [end_list(i,1), end_list(i,2), safe_dist, thetaG, open_value];
-%     pointsList = [pointsList; point];
+    % Go to safe distance above cube 
+    pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_down, open_value]];
+    % Grab cube
+    pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_top_z, thetaG_down, close_value]];
+    %pick cube up
+    pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_down, close_value]];
+    %move to end point
+    pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_down, close_value]];
+    %put cube down
+    pointsList = [pointsList; [end_list(i,1), end_list(i,2), cube_grab_top_z, thetaG_down, open_value]];
+    %move back to safe distance
+    pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_down, open_value]];
 
     i = i+1;
 end
 
-pointsList
-
 % TODO: actually use open/close_value
-        % if joint limits exceeded switch gripper orientation
-number_of_intermediate_points = 40;
+number_of_intermediate_points = 30;
 [pos_points1, pos_points2, pos_points3, pos_points4] = cubicInterp(pointsList, number_of_intermediate_points);
 
 % %default point

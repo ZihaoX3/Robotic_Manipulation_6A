@@ -28,7 +28,7 @@ xlabel('X')
 ylabel('Y')
 zlabel('Z')
 
-title("Task 2a Simulation")
+title("Task 1a Simulation")
 
 grid on
 hold on
@@ -50,7 +50,7 @@ open_value = deg2rad(90);
 close_value = deg2rad(215);
 
 thetaG_horizontal = deg2rad(0);
-thetaG_down = deg2rad(-90);
+thetaG_down = deg2rad(-89.6);
 
 %Default Pose 0.2740,0.0000,0.2048
 default_pos = [0.2740,0.0000,0.2048];
@@ -58,6 +58,7 @@ default_pos = [0.2740,0.0000,0.2048];
 %cube1 to 4, cube2 to 5, cube3 to 6
 cube1 = [0.075, -0.200];%cube holder 1 x and y
 cube4 = [0.125, -0.125];%cube holder 4 x and y
+
 cube2 = [0.225, 0];
 cube5 = [0.100, 0];
 cube6 = [0, 0.100];
@@ -70,102 +71,76 @@ safe_dist = 0.070; % safe distance above cube holder
 
 pointsList = [];
 
+% start_pos = cube1;
+% end_pos = cube4;
+
 start_list = [cube1; cube2; cube3];
 end_list = [cube4; cube5; cube6];
+% start_list = [cube2; cube1; cube3];
+% end_list = [cube5; cube4; cube6];
 
-thetaG = thetaG_down;
-try_side = false;
-    
+% % Go to default position, |▔ pose
+%     pointsList = [pointsList; [default_pos(1), default_pos(2), default_pos(3),thetaG_horizontal, open_value]];
 i=1;
-while i <= size(start_list,1)
+try_down = [];
+pointsList = [];
+while i <= length(start_list)
+   
+    
       
-      new_pointsList = task2acoordlist(start_list(i, :), end_list(i, :), safe_dist, thetaG_down, cube_grab_top_z, open_value, close_value);
+    % Go to safe distance above cube 
+    pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_horizontal, open_value]];
+    % Grab cube
+    pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_side_z, thetaG_horizontal, close_value]];
+    %pick cube up
+    pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_horizontal, close_value]];
+    %move to end point
+    pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_horizontal, close_value]];
+    %put cube down
+    pointsList = [pointsList; [end_list(i,1), end_list(i,2), cube_grab_side_z, thetaG_horizontal, open_value]];
+    %move back to safe distance
+    pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_horizontal, open_value]];
     
-        
-%       for j=1:size(new_pointsList,1)
-%           jointLimitsOk = withinJointLimits(new_pointsList(j,:));
-%           invalidIK = isIKInvalid(new_pointsList(j,:));
-% 
-%           if ~jointLimitsOk || invalidIK
-%               try_side = true;
-%           end
-%       end
-
-%       if try_side
-%         new_pointsList = task2acoordlist(start_list(i, 1:2), end_list(i, 1:2), safe_dist, thetaG_horizontal, cube_grab_side_z, open_value, close_value, cur_pointsList);
-%       end
-
-      pointsList = [pointsList; new_pointsList];
-    
-%     % Go to safe distance above cube 
-%     point = [start_list(i,1), start_list(i,2), safe_dist, thetaG, open_value];
-% 
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%     end
-%     
-%     pointsList = [pointsList; point];
-% 
-%     % Grab cube
-%     point = [start_list(i,1), start_list(i,2), cube_grab_top_z, thetaG, close_value];
-% 
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%         point(3) = cube_grab_side_z;
-%     end
-%     pointsList = [pointsList; point];
-% 
-%     %pick cube up
-%     point = [start_list(i,1), start_list(i,2), safe_dist, thetaG, close_value];
-% 
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%     end
-%     pointsList = [pointsList; point];
-% 
-%     
-%     %move to end point
-%     point = [end_list(i,1), end_list(i,2), safe_dist, thetaG, close_value];
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%     end
-%     pointsList = [pointsList; point];
-% 
-% 
-%     %put cube down
-%     point = [end_list(i,1), end_list(i,2), cube_grab_top_z, thetaG, open_value];
-%     jointLimitsOk = withinJointLimits(point);
-%     invalidIK = isIKInvalid(point);
-%     if ~jointLimitsOk || invalidIK
-%         point(4) = thetaG_horizontal;
-%         thetaG = thetaG_horizontal;
-%         point(3) = cube_grab_side_z;
-%     end
-%     pointsList = [pointsList; point];
-% 
-%     %move back to safe distance
-%     point = [end_list(i,1), end_list(i,2), safe_dist, thetaG, open_value];
-%     pointsList = [pointsList; point];
-
     i = i+1;
 end
 
-pointsList
+  for j=1:size(pointsList,1)
+      jointLimitsOk = withinJointLimits(pointsList(j,:));
+      invalidIK = isIKInvalid(pointsList(j,:));
 
-% TODO: actually use open/close_value
-        % if joint limits exceeded switch gripper orientation
+      if (~jointLimitsOk || invalidIK)
+      %if ( ~jointLimitsOk)
+          try_down(j) = true;
+      else
+          try_down = [try_down, false];
+      end
+  end
+  
+
+  for k=1:size(pointsList,1)
+      
+      if try_down(k) == true && k <=6
+          
+          for i=1:k
+%               pointsList(k, 3) = cube_grab_top_z;
+              pointsList(i, 4) = thetaG_down;  
+          end
+
+      elseif try_down(k) == true && k > 6 && k <=12
+          for i=6:k
+%               pointsList(k, 3) = cube_grab_top_z;
+              pointsList(i, 4) = thetaG_down;  
+          end
+      
+
+      elseif try_down(k) == true && k > 12
+          for i=12:k
+%               pointsList(k, 3) = cube_grab_top_z;
+              pointsList(i, 4) = thetaG_down;  
+          end
+      end
+  end
+
 number_of_intermediate_points = 40;
 [pos_points1, pos_points2, pos_points3, pos_points4] = cubicInterp(pointsList, number_of_intermediate_points);
 
@@ -223,11 +198,11 @@ for i=1:size(pos_points1,2)
     link3 = drawLink(link2end, link3end, 2, 'black');
     link4 = drawLink(link3end, end_effector_pos, 2, 'black');
         
-    if rem(i,10) == 0
+    if rem(i,30) == 0
         scatter3(end_effector_pos(1), end_effector_pos(2), end_effector_pos(3), 'MarkerEdgeColor', 'blue', 'MarkerFaceColor',[0 .75 .75], 'Marker', 'o');
     end
    
-    pause(0.01)   
+    pause(0.001)   
 end
 
 function T = Transform(alpha, a, d, theta)
