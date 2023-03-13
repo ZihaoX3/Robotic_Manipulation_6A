@@ -72,7 +72,7 @@ pointsList = [];
     pointsList = [pointsList; [start_list(1,1)*0.95, start_list(1,2)*0.95, cube_grab_side_z, thetaG_horizontal, open_value]];
     pointsList = [pointsList; [start_list(1,1)*0.95, start_list(1,2)*0.95, cube_grab_side_z, thetaG_horizontal, open_value]];
     %move to end point (stops end effector hitting floor/cube holder)
-    pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_horizontal, close_value]];
+    pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_horizontal, open_value]];
     
 %     i = i+1;
 % end

@@ -255,8 +255,7 @@ i = 0;
         theta4 = theta4_list(i);
         gripper_angle = gripperList(i);
     
-        theta1_arm = radians_to_encoder_position(theta1);%accidently wrote all the coords the wrong way round so correct here
-        %theta1_arm = theta1_convert(theta1);
+        theta1_arm = radians_to_encoder_position(theta1);%flip x axis since i defined coords wrong...(we are facing robot)
         theta2_arm = radians_to_encoder_position(-theta2);
         theta3_arm = radians_to_encoder_position(-theta3);
         theta4_arm = radians_to_encoder_position(-theta4);
@@ -267,9 +266,7 @@ i = 0;
         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_GOAL_POSITION, theta1_arm);
         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2_SHOULDER, ADDR_PRO_GOAL_POSITION, theta2_arm);
         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3_ELBOW, ADDR_PRO_GOAL_POSITION, theta3_arm);
-        
-        
-    
+      
         pause(0.007)
     end      
 

@@ -28,15 +28,22 @@ xlabel('X')
 ylabel('Y')
 zlabel('Z')
 
-title("Task 2b Simulation")
+title("Task 3 Simulation")
 
 grid on
 hold on
-xlim([-0.3 0.4])
-ylim([-0.3 0.4])
+
+%main view
+xlim([-0.3 0.3])
+ylim([-0.3 0.3])
 zlim([0 0.4])
-%view([1,1,1])  
 view(3);
+
+%view drawing board
+% xlim([0.02 0.12])
+% ylim([0.14 0.24])
+% zlim([0 0.4])
+% view(0,90) 
 
 
 % Cube Holder Coords
@@ -51,78 +58,61 @@ open_value = deg2rad(90);
 close_value = deg2rad(215);
 
 thetaG_horizontal = deg2rad(0);
-thetaG_down = deg2rad(-89.6);
+thetaG_down = deg2rad(-85);
 
 %Default Pose 0.2740,0.0000,0.2048
 default_pos = [0.2740,0.0000,0.2048];
 
-%cube1 to 4, cube2 to 5, cube3 to 6
-cube1 = [0.075, -0.200];%cube holder 1 x and y
-cube4 = [0.125, -0.125];%cube holder 4 x and y
-cube2 = [0.225, 0];
-cube5 = [0.100, 0];
-cube6 = [0, 0.100];
-cube3 = [0.150, 0.150];
-
 
 cube_grab_top_z = 0.035; % height when grabbing cube from above
 cube_grab_side_z = 0.03;%height when grabbing cube from side
-safe_dist = 0.070; % safe distance above cube holder
+safe_dist = 0.08; % safe distance above cube holder
 
-pointsList = [];
 
 % start_pos = cube1;
 % end_pos = cube4;
 
-start_list = [cube1; cube2; cube2; cube3];
-end_list = [cube1; cube2;cube2; cube3];
-% start_list = [cube2; cube1; cube3];
-% end_list = [cube5; cube4; cube6];
 
 % % Go to default position, |▔ pose
 %     pointsList = [pointsList; [default_pos(1), default_pos(2), default_pos(3),thetaG_horizontal, open_value]];
-i=1;
+
 try_down = [];
 pointsList = [];
-while i <= length(start_list)
+% i=1;
+% while i <= length(start_list)
 
-   % Go to safe distance above cube 
-    pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_down, open_value]];
-    % Grab cube
-    pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_top_z, thetaG_down, open_value]];
-   
-    %pick cube up
-    pointsList = [pointsList; [start_list(i,1)/1.35, start_list(i,2)/1.35, safe_dist, thetaG_down, close_value]];
+line_length = 0.025;
+height_when_holding_pen = 0.07;  %half height of pen, need to adjust for height of pen holder 
 
-    %rotate cube at heigher z
-    pointsList = [pointsList; [start_list(i,1)/1.35, start_list(i,2)/1.35, 0.1, thetaG_horizontal, close_value]];
-    %put cube down
-    pointsList = [pointsList; [start_list(i,1)*0.95, start_list(i,2)*0.95, cube_grab_side_z, thetaG_horizontal, open_value]];%might need to add offset as gripper cant pick up cube in middle when thetaG_down
-    
-    %move to end point (stops end effector hitting floor/cube holder)
-    pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_horizontal, open_value]];
-    
+%start
+cur_pos = [0.060, 0.150];
+pointsList = [pointsList; [cur_pos(1), cur_pos(2), height_when_holding_pen, thetaG_horizontal, close_value]];
       
-%     % Go to safe distance above cube 
-%     pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_down, open_value]];
-%     % Grab cube
-%     pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_top_z, thetaG_down, close_value]];
-%     %pick cube up
-%     pointsList = [pointsList; [start_list(i,1)/1.55, start_list(i,2)/1.55, safe_dist, thetaG_down, close_value]];
-% 
-%     %rotate cube
-%     pointsList = [pointsList; [start_list(i,1)/1.55, start_list(i,2)/1.55, safe_dist, thetaG_horizontal, close_value]];
-%     %put cube down
-%     pointsList = [pointsList; [start_list(i,1)*0.95, start_list(i,2)*0.95, cube_grab_side_z, thetaG_horizontal, open_value]];%might need to add offset as gripper cant pick up cube in middle when thetaG_down
-%    
-%     %move to end point (stops end effector hitting floor/cube holder)
-%     pointsList = [pointsList; [end_list(i,1), end_list(i,2), safe_dist, thetaG_horizontal, open_value]];
+%horizontal Line
+cur_pos(2) = cur_pos(2) + line_length;
+pointsList = [pointsList; [cur_pos(1), cur_pos(2), height_when_holding_pen, thetaG_horizontal, close_value]];
+
+%vertical line
+cur_pos(1) = cur_pos(1) + line_length;                                        
+pointsList = [pointsList; [cur_pos(1), cur_pos(2), height_when_holding_pen, thetaG_horizontal, close_value]];
+
+%diagonal upwards to the right line
+cur_pos(1) = cur_pos(1) - line_length;
+cur_pos(2) = cur_pos(2) + line_length;
+pointsList = [pointsList; [cur_pos(1), cur_pos(2), height_when_holding_pen, thetaG_horizontal, close_value]];
+
+%arc
+ [x_list, y_list] = circle(cur_pos,[cur_pos(1),cur_pos(2)+0.015], deg2rad(-270), 14);
+
+
+for i = 1:length(x_list)
+    pointsList = [pointsList; [x_list(i),  y_list(i), height_when_holding_pen, thetaG_horizontal, close_value]];
+end   
+   
     
-    i = i+1;
-end
+%     i = i+1;
+% end
 
-
-%% switch to down %%
 %   for j=1:size(pointsList,1)
 %       jointLimitsOk = withinJointLimits(pointsList(j,:));
 %       invalidIK = isIKInvalid(pointsList(j,:));
@@ -160,12 +150,13 @@ end
 %       end
 %   end
 
-number_of_intermediate_points = 30;
-[pos_points1, pos_points2, pos_points3, pos_points4, pos_points5] = cubicInterp(pointsList, number_of_intermediate_points);
+number_of_intermediate_points = 10;
+[pos_points1, pos_points2, pos_points3, pos_points4, pos_points5] = cubicInterp_cartesian(pointsList, number_of_intermediate_points);
 
+%plot fk
 counter = 0;
 counter2 = 0;
-for i=1:size(pos_points1,2) 
+for i=1:length(pos_points1)
     
     theta1 = pos_points1(i);
     theta2 = pos_points2(i);
@@ -192,11 +183,10 @@ for i=1:size(pos_points1,2)
     end_effector_pos = T0_4(1:3,4);
     end_effector_orientation = T0_4(1:3,1:3);
 
-    cube_holder_z = 0.005;
-    if end_effector_pos(3) <= cube_holder_z
-        disp("end effector hit floor/cube holder")
+     
+    if end_effector_pos(3) <= 0
+        disp("end effector hit floor")
     end
-    
     
     %remove robot from previous iteration
     if i ~=1
@@ -212,7 +202,7 @@ for i=1:size(pos_points1,2)
     link3 = drawLink(link2end, link3end, 2, 'black');
     link4 = drawLink(link3end, end_effector_pos, 2, 'black');
         
-    if rem(i,30) == 0
+    if rem(i,1) == 0
         scatter3(end_effector_pos(1), end_effector_pos(2), end_effector_pos(3), 'MarkerEdgeColor', 'blue', 'MarkerFaceColor',[0 .75 .75], 'Marker', 'o');
     end
 
@@ -227,7 +217,7 @@ for i=1:size(pos_points1,2)
         counter2 =0;
     end
    
-    pause(0.008)   
+    pause(0.0001)   
 end
 
 function T = Transform(alpha, a, d, theta)

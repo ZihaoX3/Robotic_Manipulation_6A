@@ -22,7 +22,7 @@ function [theta1,theta2,theta3,theta4] = InverseKinematics(x,y,z,gripper_orienta
     % theta3
     arg = ( ((r2^2 + z2^2) - (l2^2 + l3^2)) / (2*l2*l3) );
     
-    theta3 = -acos(arg);% two sols + and - when feasible? derived using cosine rule...
+    theta3 = -acos(arg);% two sols + and - when feasible? 
     
     % theta2
     theta2_denom = (((l2 + l3*cos(theta3))*z2) - ((l3*sin(theta3))*r2))/ (r2^2 + z2^2);

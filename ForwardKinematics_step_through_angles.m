@@ -121,15 +121,15 @@ end
 
 function frame = plotCoordFrame(transform)
 
-    x_dir = transform(1:3,1)*0.015;
-    y_dir = transform(1:3,2)*0.015;
+    x_direction = transform(1:3,1)*0.015;
+    y_direction = transform(1:3,2)*0.015;
 
-    z_dir = cross(x_dir,y_dir) *70;
+    z_direction = cross(x_direction,y_direction) *70;
     start = transform(:,4);
 
-    frame(1) = plot3([start(1) start(1)+x_dir(1)],[start(2) start(2)+x_dir(2)],[start(3) start(3)+x_dir(3)],'LineWidth',2,'Color','red');
-    frame(2) = plot3([start(1) start(1)+y_dir(1)],[start(2) start(2)+y_dir(2)],[start(3) start(3)+y_dir(3)],'LineWidth',2,'Color','green');
-    frame(3) = plot3([start(1) start(1)+z_dir(1)],[start(2) start(2)+z_dir(2)],[start(3) start(3)+z_dir(3)],'LineWidth',2,'Color','blue');
+    frame(1) = plot3([start(1) start(1)+x_direction(1)],[start(2) start(2)+x_direction(2)],[start(3) start(3)+x_direction(3)],'LineWidth',2,'Color','red');
+    frame(2) = plot3([start(1) start(1)+y_direction(1)],[start(2) start(2)+y_direction(2)],[start(3) start(3)+y_direction(3)],'LineWidth',2,'Color','green');
+    frame(3) = plot3([start(1) start(1)+z_direction(1)],[start(2) start(2)+z_direction(2)],[start(3) start(3)+z_direction(3)],'LineWidth',2,'Color','blue');
 end
 
 function link = drawLink (start, endpoint, width, colour)
