@@ -9,6 +9,7 @@ function [pos_points1,pos_points2,pos_points3,pos_points4, pos_points5] = cubicI
     
         j = 1;
     while  j < size(points,1)
+        j
         currentPoint = points(j, 1:3);
         nextPoint = points(j+1, 1:3);
         current_thetaG_pos = points(j,4);

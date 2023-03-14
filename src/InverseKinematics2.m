@@ -47,14 +47,14 @@ function [theta] = InverseKinematics2(x,y,z,gripper_orientation)
     
     theta2_num = (((l2 + l3*cos(theta(3)))*r2) + ((l3*sin(theta(3)))*z2))/ (r2^2 + z2^2);
 
-    theta(2) = atan2(theta2_num,theta2_denom);
+    theta2 = atan(theta2_num/theta2_denom);
 
-%     if isreal(theta2)
-%             theta(2)= theta2;
-%     else
-%         disp("invalid theta2")
-%         return
-%     end
+    if isreal(theta2)
+            theta(2)= atan2(theta2_num,theta2_denom);
+    else
+        disp("invalid theta2")
+        return
+    end
 
    % theta(4)
     theta(4) = gripper_orientation - theta(3) - pi/2 + theta(2);% gripper orientation with respect to world frame is sum of total rotations of links in z-r plane

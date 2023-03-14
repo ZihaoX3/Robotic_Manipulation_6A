@@ -46,7 +46,7 @@ view(3);
 % view(0,90) 
 
 
-% Cube Holder Coords
+% Cube Holder Coords (flipped y and x as x flipped since facing robot, correct by -theta1)
 % 1. (0.075, -0.200)
 % 2. (0.225, 0)
 % 3. (0.150, 0.150)
@@ -64,25 +64,26 @@ thetaG_down = deg2rad(-85);
 default_pos = [0.2740,0.0000,0.2048];
 
 
-cube_grab_top_z = 0.035; % height when grabbing cube from above
-cube_grab_side_z = 0.03;%height when grabbing cube from side
-safe_dist = 0.08; % safe distance above cube holder
-
-
-% start_pos = cube1;
-% end_pos = cube4;
-
 
 % % Go to default position, |▔ pose
 %     pointsList = [pointsList; [default_pos(1), default_pos(2), default_pos(3),thetaG_horizontal, open_value]];
 
 try_down = [];
 pointsList = [];
-% i=1;
-% while i <= length(start_list)
 
 line_length = 0.025;
-height_when_holding_pen = 0.07;  %half height of pen, need to adjust for height of pen holder 
+height_when_holding_pen = 0.07;  %half height of pen, need to adjust for height of pen holder when grab
+
+grab_pen_z = 0.07 + 0.03; % height when grabbing pen
+pen_loc = [0.1,-0.1];
+
+%pick up pen 
+pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, open_value]];
+pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, close_value]];
+
+%lift up pen
+pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z+ 0.03, thetaG_horizontal, close_value]];
+
 
 %start
 cur_pos = [0.060, 0.150];
@@ -109,9 +110,7 @@ for i = 1:length(x_list)
     pointsList = [pointsList; [x_list(i),  y_list(i), height_when_holding_pen, thetaG_horizontal, close_value]];
 end   
    
-    
-%     i = i+1;
-% end
+   
 
 %   for j=1:size(pointsList,1)
 %       jointLimitsOk = withinJointLimits(pointsList(j,:));

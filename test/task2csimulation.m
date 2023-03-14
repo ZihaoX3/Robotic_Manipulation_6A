@@ -38,7 +38,7 @@ zlim([0 0.4])
 view(3);
 
 
-% Cube Holder Coords
+% Cube Holder Coords (flipped y and x as x flipped since facing robot, correct by -theta1)
 % 1. (0.075, -0.200)
 % 2. (0.225, 0)
 % 3. (0.150, 0.150)

@@ -44,7 +44,7 @@ DXL_ID3_ELBOW                    = 13;            % Dynamixel ID: 3
 DXL_ID4_WRIST                    = 14;            % Dynamixel ID: 4
 DXL_ID5_GRIPPER                  = 15;            % Dynamixel ID: 5
 BAUDRATE                    = 115200;
-DEVICENAME                  = 'COM5';       % Check which port is being used on your controller
+DEVICENAME                  = 'COM7';       % Check which port is being used on your controller
                                             % ex) Windows: 'COM1'   Linux: '/dev/ttyUSB0' Mac: '/dev/tty.usbserial-*'
                                             
 TORQUE_ENABLE               = 1;            % Value for enabling the torque
@@ -133,7 +133,7 @@ else
     fprintf('Dynamixel has been successfully connected \n');
 end
 
-i = 0;
+% i = 0;
 
 
 %     j = 0;
@@ -244,8 +244,9 @@ i = 0;
 
 
 
-%% TASK2a Test %%
- [theta1_list, theta2_list, theta3_list, theta4_list, gripperList] = task2b_robot();
+%% TASK2b Test %%
+%  [theta1_list, theta2_list, theta3_list, theta4_list, gripperList] = task2b_robot();
+    [theta1_list, theta2_list, theta3_list, theta4_list, gripperList] =  task3robot();
 
     for i=1:size(theta1_list,2) 
     

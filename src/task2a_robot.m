@@ -1,5 +1,6 @@
 function [theta1, theta2, theta3, theta4, gripperList] = task2a_robot()
-    % Cube Holder Coords
+
+    % Cube Holder Coords (flipped y and x as x flipped since facing robot, correct by -theta1)
     % 1. (0.075, -0.200)
     % 2. (0.225, 0)
     % 3. (0.150, 0.150)
