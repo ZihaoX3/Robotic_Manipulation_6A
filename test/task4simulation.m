@@ -24,7 +24,7 @@ xlabel('X')
 ylabel('Y')
 zlabel('Z')
 
-title("Task  Simulation")
+title("Task 4 Simulation")
 
 grid on
 hold on
@@ -129,12 +129,6 @@ pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, theta
 %vertial down line  
 coords = [0.19, 0.20];
 pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-
-for i = 1:length(x_list)
-    pointsList = [pointsList; [x_list(i),  y_list(i), height_when_holding_pen, thetaG_horizontal, close_value]];
-end   
-   
  
 
 number_of_intermediate_points = 10;
