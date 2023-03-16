@@ -16,14 +16,23 @@ function [pos_points1, pos_points2, pos_points3, pos_points4, pos_points5] =  ta
     pointsList = [];
     
     % line_length = 0.025;
-    height_when_holding_pen = 0.07;  %half height of pen, need to adjust for height of pen holder when grab
+    height_when_holding_pen = 0.063;  %half height of pen, need to adjust for height of pen holder when grab
     
-    grab_pen_z = 0.07 + 0.03; % height when grabbing pen
+    grab_pen_z = 0.07 + 0.025; % height when grabbing pen
     pen_loc = [0.075, -0.200];
+
+    %default pose
+    pointsList = [pointsList; [0.2740, 0.0000, grab_pen_z + 0.1, thetaG_horizontal, open_value]];
+    pointsList = [pointsList; [0.2740, 0.0000, grab_pen_z + 0.1, thetaG_horizontal, open_value]];
+
+    pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z + 0.1, thetaG_horizontal, open_value]];
+    pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z + 0.1, thetaG_horizontal, open_value]];
     
-    pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z + 0.12, thetaG_horizontal, open_value]];
+
 %     %pick up pen 
-    pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, open_value]];
+    pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, close_value]];
+    pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, close_value]];
+    pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, close_value]];
     pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, close_value]];
     
     %lift up pen
@@ -32,6 +41,13 @@ function [pos_points1, pos_points2, pos_points3, pos_points4, pos_points5] =  ta
     
     %start
     coords = [0.200, 0.060];
+    %go above start
+    pointsList = [pointsList; [coords(1), coords(2), grab_pen_z, thetaG_horizontal, close_value]];
+    pointsList = [pointsList; [coords(1), coords(2), grab_pen_z, thetaG_horizontal, close_value]];
+    
+    
+    %draw first part
+    pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
     pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
     
     %diagonal upwards to the right line
@@ -46,17 +62,17 @@ function [pos_points1, pos_points2, pos_points3, pos_points4, pos_points5] =  ta
     coords = [ 0.2,0.060];
     pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
     
-    cur_pos = [ 0.200,0.060];%- x coord as facing robot
+    cur_pos = [ 0.200,0.060];
     
     %arc
-     [x_list, y_list] = circle(cur_pos,[0.2,0.1], deg2rad(-180), 14);%- x coord as facing robot
+     [x_list, y_list] = circle(cur_pos,[0.2,0.1], deg2rad(-180), 11);
     
     for i = 1:length(x_list)
         pointsList = [pointsList; [x_list(i),  y_list(i), height_when_holding_pen, thetaG_horizontal, close_value]];
     end   
    
 
-    number_of_intermediate_points = 10;
+    number_of_intermediate_points = 15;
     [pos_points1, pos_points2, pos_points3, pos_points4, pos_points5] = cubicInterp_cartesian(pointsList, number_of_intermediate_points);
 
 end

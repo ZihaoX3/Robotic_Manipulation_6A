@@ -1,4 +1,4 @@
-function [x_list, y_list] = circle(start, mid, angle, steps)
+function [x_list, y_list] = circle_spiral(start, mid, angle, steps, radius)
   % -ve angle to draw clockwise
   % angle is angle to draw circle until
   % mid is centre of circle
@@ -18,7 +18,7 @@ function [x_list, y_list] = circle(start, mid, angle, steps)
     x_list = [];
     y_list= [];
     
-    radius = sqrt((start(1) - mid(1))^2 + (start(2) - mid(2)) ^2); % calculating radius
+%     radius = sqrt((start(1) - mid(1))^2 + (start(2) - mid(2)) ^2) % calculating radius
     dif = start - mid; %vector direction of centre of circle
     adjust_angle = atan2(dif(2), dif(1)); % absolute angle from current position to centre of circle
     
@@ -27,11 +27,15 @@ function [x_list, y_list] = circle(start, mid, angle, steps)
     points_circle = [];
     
     for i = 1:size(theta,2)
+        
         x = radius*cos(theta(i)) + mid(1);
         y = radius*sin(theta(i)) + mid(2);
         points_circle = [points_circle; [x, y]];
         x_list = [x_list, x];
         y_list = [y_list, y];
+        radius = radius - (radius/steps);
+            
+        
         
     end
 

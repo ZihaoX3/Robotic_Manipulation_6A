@@ -9,7 +9,7 @@ function [pos_points1,pos_points2,pos_points3,pos_points4, pos_points5] = cubicI
     
         j = 1;
     while  j < size(points,1)
-        j
+     
         currentPoint = points(j, 1:3);
         nextPoint = points(j+1, 1:3);
         current_thetaG_pos = points(j,4);
@@ -33,7 +33,7 @@ function [pos_points1,pos_points2,pos_points3,pos_points4, pos_points5] = cubicI
         pos_points3 = [pos_points3, theta(3)];
         pos_points4 = [pos_points4, theta(4)];
 
-            if i > length(q1)/1.1
+            if i > length(q1)*0.9
                 pos_points5 = [pos_points5, next_gripper_angle];
             else
                 pos_points5 = [pos_points5, gripper_angle];

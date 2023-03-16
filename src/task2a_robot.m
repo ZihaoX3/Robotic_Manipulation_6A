@@ -26,8 +26,8 @@ function [theta1, theta2, theta3, theta4, gripperList] = task2a_robot()
     cube3 = [0.150, 0.150];
     
   
-    cube_grab_top_z = 0.06; % height when grabbing cube from above
-    cube_grab_side_z = 0.06;%height when grabbing cube from side
+   cube_grab_top_z = 0.059; % height when grabbing cube from above
+    cube_grab_side_z = 0.0500;
     safe_dist = 0.085; % safe distance above cube holder
     
     pointsList = [];
@@ -43,7 +43,14 @@ function [theta1, theta2, theta3, theta4, gripperList] = task2a_robot()
     pointsList = [];
     
     % % Go to default position, |▔ pose
-    pointsList = [pointsList; [0, 0.274  ,0.2048, thetaG_horizontal, open_value]];
+%     pointsList = [pointsList; [0, 0.274  ,0.2048, thetaG_horizontal, open_value]];
+
+% [ID:011] Position 1: 2087
+% [ID:012] Position 2: 757
+% [ID:013] Position 3: 3038
+% [ID:014] Position 4: 2516
+%     pointsList = [pointsList; [encoder_position_to_radians(2087), encoder_position_to_radians(757), encoder_position_to_radians(3038), thetaG_horizontal, open_value]];
+
    
     i=1;
     while i <= length(start_list)
@@ -53,8 +60,8 @@ function [theta1, theta2, theta3, theta4, gripperList] = task2a_robot()
         % Go to safe distance above cube 
         pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_down, open_value]];
         % Grab cube
-        pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_side_z, thetaG_down, close_value]];
-        pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_side_z, thetaG_down, close_value]];
+        pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_top_z, thetaG_down, close_value]];
+        pointsList = [pointsList; [start_list(i,1), start_list(i,2), cube_grab_top_z, thetaG_down, close_value]];
         %pick cube up
         pointsList = [pointsList; [start_list(i,1), start_list(i,2), safe_dist, thetaG_down, close_value]];
         %move to end point

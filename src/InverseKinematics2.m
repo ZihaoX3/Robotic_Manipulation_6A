@@ -23,24 +23,21 @@ function [theta] = InverseKinematics2(x,y,z,gripper_orientation)
     arg = ( ((r2^2 + z2^2) - (l2^2 + l3^2)) / (2*l2*l3) ); %from T1_2*T2_3 
 
     
-    theta(3) = -acos(arg); % -ve is elbow up i think??
+    theta3 = - acos(arg); % -ve is elbow up
     
-    %change to elbow down if violates joint limits (don't need)
-%     if ((rad2deg(theta(3)) > 90) || (rad2deg(theta(3)) < -125))
-%         theta(3) = acos(arg);
+    %change to elbow down if violates joint limits (joint limits probably wrong)
+%     if ((rad2deg(theta3) > 150) || -(rad2deg(theta3) > 90))
+%         theta3 = acos(arg);
+%         rad2deg(theta3)
 %         disp("changing to elbow down")
 %     end
-        
-%     s3 = sqrt(1 - arg^2); %+ve sol
-%     theta(3) = -atan2(s3, cos(arg)); 
-   
-
-%     if isreal(theta3)
-%             theta(3)= theta3;
-%     else
-%         disp("invalid theta3")
-%         return
-%     end
+          
+    if isreal(theta3)
+            theta(3)= theta3;
+    else
+        disp("invalid theta3")
+        return
+    end
     
     % theta(2)
     theta2_denom = (((l2 + l3*cos(theta(3)))*z2) - ((l3*sin(theta(3)))*r2))/ (r2^2 + z2^2);

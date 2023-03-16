@@ -44,13 +44,13 @@ zlim([0 0.4])
 %IK    end_list(2,1), end_list(2,2), current_place_down_height + 0.4, thetaG_down
 
 %-0.0370    0.1296    0.1000         0    3.7525
-[theta1, theta2, theta3, theta4] = InverseKinematics(0.075, -0.200 ,   0.1000, deg2rad(0));
+% [theta1, theta2, theta3, theta4] = InverseKinematics(0.075, -0.200 ,   0.1000, deg2rad(0));
 
-% [theta] = InverseKinematics2(  0.2250    ,     0   , 0.0350 , deg2rad(0));
-% theta(1) = theta1;
-% theta(2) = theta2;
-% theta(3) = theta3;
-% theta(4) = theta4;
+[theta] = InverseKinematics2( 0.09, 0.09 ,   0.1000, deg2rad(0));
+theta1 = theta(1);
+theta2 = theta(2);
+theta3 = theta(3);
+theta4= theta(4);
 rad2deg(theta1)
 rad2deg(theta2)
 rad2deg(theta3)

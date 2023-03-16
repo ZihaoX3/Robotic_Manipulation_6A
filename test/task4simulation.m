@@ -35,8 +35,8 @@ ylim([-0.3 0.3])
 zlim([0 0.4])
 view(3);
 
-open_value = deg2rad(90);
-close_value = deg2rad(215);
+open_value = 1024; 
+close_value = 2446; 
 
 thetaG_horizontal = deg2rad(0);
 thetaG_down = deg2rad(-85);
@@ -46,7 +46,7 @@ default_pos = [0.2740,0.0000,0.2048];
 
 
 % % Go to default position, |▔ pose
-%     pointsList = [pointsList; [default_pos(1), default_pos(2), default_pos(3),thetaG_horizontal, open_value]];
+%     pointsList = [pointsList; [default_pos(1), default_pos(2), default_pos(3),thetaG_down, open_value]];
 
 pointsList = [];
 
@@ -54,82 +54,82 @@ pointsList = [];
 height_when_holding_pen = 0.05;  %half height of pen, need to adjust for height of pen holder when grab
 
 grab_pen_z = 0.07 + 0.03; % height when grabbing pen
-pen_loc = [-0.1,0.1];
+pen_loc = [0.1,-0.1];
 
 %pick up pen 
-pointsList = [pointsList; [-pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, open_value]];
-pointsList = [pointsList; [-pen_loc(1), pen_loc(2), grab_pen_z, thetaG_horizontal, close_value]];
+pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_down, open_value]];
+pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z, thetaG_down, close_value]];
 
 %lift up pen
-pointsList = [pointsList; [-pen_loc(1), pen_loc(2), grab_pen_z+ 0.03, thetaG_horizontal, close_value]];
+pointsList = [pointsList; [pen_loc(1), pen_loc(2), grab_pen_z+ 0.03, thetaG_down, close_value]];
 
 %First wrap round
-%start
-coords = [0.040, 0.050];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
+% %start
+% coords = [0.040, 0.050];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %horizontal right line
+% coords = [0.190, 0.050];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];  
 
-%horizontal right line
-coords = [0.190, 0.050];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];  
+% %downward vertical Line
+% coords = [0.190, 0.10];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
 
-%downward vertical Line
-coords = [0.190, 0.10];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
+% %horizontal left line   
+% coords = [0.040, 0.100];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
 
-%horizontal left line   
-coords = [0.040, 0.100];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
+% %vertial down line
+% coords = [0.040, 0.150];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
 
-%vertial down line
-coords = [0.040, 0.150];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%horizontal right line
-coords = [0.190, 0.150];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%vertial down line
-coords = [0.19, 0.20];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%horizontal left line   
+% %horizontal right line
+% coords = [0.190, 0.150];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %vertial down line
+% coords = [0.19, 0.20];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %horizontal left line   
 coords = [0.040, 0.20];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
+pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
 
-%%% reverse round
-
-%start
-coords = [0.040, 0.20];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%vertial up line
-coords = [0.04, 0.05];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%horizontal right line   
-coords = [0.09, 0.05];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%vertial down line
-coords = [0.09, 0.20];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%horizontal right line   
-coords = [0.14, 0.20];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%vertial up line  
-coords = [0.14, 0.05];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%horizontal right line   
-coords = [0.19, 0.05];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
-
-%vertial down line  
-coords = [0.19, 0.20];
-pointsList = [pointsList; [-coords(1), coords(2), height_when_holding_pen, thetaG_horizontal, close_value]];
- 
+% %%% reverse round
+% 
+% %start
+% coords = [0.040, 0.20];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %vertial up line
+% coords = [0.04, 0.05];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %horizontal right line   
+% coords = [0.09, 0.05];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %vertial down line
+% coords = [0.09, 0.20];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %horizontal right line   
+% coords = [0.14, 0.20];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %vertial up line  
+% coords = [0.14, 0.05];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %horizontal right line   
+% coords = [0.19, 0.05];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+% 
+% %vertial down line  
+% coords = [0.19, 0.20];
+% pointsList = [pointsList; [coords(1), coords(2), height_when_holding_pen, thetaG_down, close_value]];
+%  
 
 number_of_intermediate_points = 10;
 [pos_points1, pos_points2, pos_points3, pos_points4, pos_points5] = cubicInterp_cartesian(pointsList, number_of_intermediate_points);
