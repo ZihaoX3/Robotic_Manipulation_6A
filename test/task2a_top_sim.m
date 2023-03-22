@@ -103,20 +103,6 @@ end
 number_of_intermediate_points = 30;
 [pos_points1, pos_points2, pos_points3, pos_points4] = cubicInterp(pointsList, number_of_intermediate_points);
 
-% %default point
-% point.x = 0.2740;
-% point.y = 0;
-% point.z = 0.2048; %default |▔ pose
-% point.thetaG = deg2rad(0);
-% point.gripPose = open_value;
-% 
-% pointsList = [pointsList, point]; % append point to pointList
-% 
-% %go to above cube
-% point.x = start_pos(1);
-% point.y = start_pos(2);
-% point.z = safe_dist;
-
 for i=1:size(pos_points1,2) 
     
     theta1 = pos_points1(i);
