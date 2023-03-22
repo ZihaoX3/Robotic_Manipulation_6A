@@ -45,10 +45,7 @@ function [theta1, theta2, theta3, theta4, gripperList] = task2a_robot()
     % % Go to default position, |▔ pose
 %     pointsList = [pointsList; [0, 0.274  ,0.2048, thetaG_horizontal, open_value]];
 
-% [ID:011] Position 1: 2087
-% [ID:012] Position 2: 757
-% [ID:013] Position 3: 3038
-% [ID:014] Position 4: 2516
+
 %     pointsList = [pointsList; [encoder_position_to_radians(2087), encoder_position_to_radians(757), encoder_position_to_radians(3038), thetaG_horizontal, open_value]];
 
    
