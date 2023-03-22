@@ -216,36 +216,8 @@ end
 
 
 
-%% Set one position %%
-% %       %Default Pose 0.2740,0.0000,0.2048 225,0,40,0,deg2rad(212)
-%         [theta1_rad, theta2_rad, theta3_rad, theta4_rad] = InverseKinematics(0.274,0,0.2048, deg2rad(0));
-%         
-%         %our angles are defined as left positive, robot is right positive i think
-% %         theta1 = radians_to_encoder_position(theta1_rad);
-%         theta2 = radians_to_encoder_position(-theta2_rad);
-%         theta3 = radians_to_encoder_position(-theta3_rad);
-%         theta4 = radians_to_encoder_position(-theta4_rad);
-%         theta1 = theta1_convert(theta1_rad);
-%         %write position
-% 
-%         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_GOAL_POSITION, theta1);
-%         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2_SHOULDER, ADDR_PRO_GOAL_POSITION, theta2);
-%         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3_ELBOW, ADDR_PRO_GOAL_POSITION, theta3);
-%         write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4_WRIST, ADDR_PRO_GOAL_POSITION, theta4);
-% %     write4ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5_GRIPPER, ADDR_PRO_GOAL_POSITION, theta5);
-%         pause(50) 
-
-%     end
 
 
-% Disable Dynamixel Torque
-% write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-% setTorqueAll(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_TORQUE_ENABLE,TORQUE_DISABLE);
-%     write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID1_BASE, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-%     write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID2_SHOULDER, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-%     write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID3_ELBOW, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-%     write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID4_WRIST, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
-%     write1ByteTxRx(port_num, PROTOCOL_VERSION, DXL_ID5_GRIPPER, ADDR_PRO_TORQUE_ENABLE, TORQUE_DISABLE);
 
 dxl_comm_result = getLastTxRxResult(port_num, PROTOCOL_VERSION);
 dxl_error = getLastRxPacketError(port_num, PROTOCOL_VERSION);
